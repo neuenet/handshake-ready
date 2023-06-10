@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>Is Handshake Ready?</title>
+
+    <meta name="description" content="Handshake is a promising blockchain-based alt-root of the DNS. This infosite outlines the 3 key areas Handshake needs to focus on before it's truly ready: availability, usability, and scalability."/>
+    <meta property="og:image" content="og.png"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <link rel="favicon" href="favicon.ico"/>
+
+    <style>
+      /** RESET ———————————————————————————————————————————————————————— */
+
+      *, *::before, *::after {
+        margin: 0; padding: 0;
+        box-sizing: border-box;
+      }
+
+      /** ROOT ————————————————————————————————————————————————————————— */
+
+      :root {
+        /** Gray ───────────────────────────────── */
+        --inc-gray-0: #f8f9fa;
+        --inc-gray-1: #f1f3f5;
+        --inc-gray-2: #e9ecef;
+        --inc-gray-3: #dee2e6;
+        --inc-gray-4: #ced4da;
+        --inc-gray-5: #adb5bd;
+        --inc-gray-6: #868e96;
+        --inc-gray-7: #495057;
+        --inc-gray-8: #343a40;
+        --inc-gray-9: #212529;
+
+        /** Red ────────────────────────────────── */
+        --inc-red-0: #fff5f5;
+        --inc-red-1: #ffe3e3;
+        --inc-red-2: #ffc9c9;
+        --inc-red-3: #ffa8a8;
+        --inc-red-4: #ff8787;
+        --inc-red-5: #ff6b6b;
+        --inc-red-6: #fa5252;
+        --inc-red-7: #f03e3e;
+        --inc-red-8: #e03131;
+        --inc-red-9: #c92a2a;
+
+        /** Pink ───────────────────────────────── */
+        --inc-pink-0: #fff0f6;
+        --inc-pink-1: #ffdeeb;
+        --inc-pink-2: #fcc2d7;
+        --inc-pink-3: #faa2c1;
+        --inc-pink-4: #f783ac;
+        --inc-pink-5: #f06595;
+        --inc-pink-6: #e64980;
+        --inc-pink-7: #d6336c;
+        --inc-pink-8: #c2255c;
+        --inc-pink-9: #a61e4d;
+
+        /** Grape ──────────────────────────────── */
+        --inc-grape-0: #f8f0fc;
+        --inc-grape-1: #f3d9fa;
+        --inc-grape-2: #eebefa;
+        --inc-grape-3: #e599f7;
+        --inc-grape-4: #da77f2;
+        --inc-grape-5: #cc5de8;
+        --inc-grape-6: #be4bdb;
+        --inc-grape-7: #ae3ec9;
+        --inc-grape-8: #9c36b5;
+        --inc-grape-9: #862e9c;
+
+        /** Violet ─────────────────────────────── */
+        --inc-violet-0: #f3f0ff;
+        --inc-violet-1: #e5dbff;
+        --inc-violet-2: #d0bfff;
+        --inc-violet-3: #b197fc;
+        --inc-violet-4: #9775fa;
+        --inc-violet-5: #845ef7;
+        --inc-violet-6: #7950f2;
+        --inc-violet-7: #7048e8;
+        --inc-violet-8: #6741d9;
+        --inc-violet-9: #5f3dc4;
+
+        /** Indigo ─────────────────────────────── */
+        --inc-indigo-0: #edf2ff;
+        --inc-indigo-1: #dbe4ff;
+        --inc-indigo-2: #bac8ff;
+        --inc-indigo-3: #91a7ff;
+        --inc-indigo-4: #748ffc;
+        --inc-indigo-5: #5c7cfa;
+        --inc-indigo-6: #4c6ef5;
+        --inc-indigo-7: #4263eb;
+        --inc-indigo-8: #3b5bdb;
+        --inc-indigo-9: #364fc7;
+
+        /** Blue ───────────────────────────────── */
+        --inc-blue-0: #e7f5ff;
+        --inc-blue-1: #d0ebff;
+        --inc-blue-2: #a5d8ff;
+        --inc-blue-3: #74c0fc;
+        --inc-blue-4: #4dabf7;
+        --inc-blue-5: #339af0;
+        --inc-blue-6: #228be6;
+        --inc-blue-7: #1c7ed6;
+        --inc-blue-8: #1971c2;
+        --inc-blue-9: #1864ab;
+
+        /** Cyan ───────────────────────────────── */
+        --inc-cyan-0: #e3fafc;
+        --inc-cyan-1: #c5f6fa;
+        --inc-cyan-2: #99e9f2;
+        --inc-cyan-3: #66d9e8;
+        --inc-cyan-4: #3bc9db;
+        --inc-cyan-5: #22b8cf;
+        --inc-cyan-6: #15aabf;
+        --inc-cyan-7: #1098ad;
+        --inc-cyan-8: #0c8599;
+        --inc-cyan-9: #0b7285;
+
+        /** Teal ───────────────────────────────── */
+        --inc-teal-0: #e6fcf5;
+        --inc-teal-1: #c3fae8;
+        --inc-teal-2: #96f2d7;
+        --inc-teal-3: #63e6be;
+        --inc-teal-4: #38d9a9;
+        --inc-teal-5: #20c997;
+        --inc-teal-6: #12b886;
+        --inc-teal-7: #0ca678;
+        --inc-teal-8: #099268;
+        --inc-teal-9: #087f5b;
+
+        /** Green ──────────────────────────────── */
+        --inc-green-0: #ebfbee;
+        --inc-green-1: #d3f9d8;
+        --inc-green-2: #b2f2bb;
+        --inc-green-3: #8ce99a;
+        --inc-green-4: #69db7c;
+        --inc-green-5: #51cf66;
+        --inc-green-6: #40c057;
+        --inc-green-7: #37b24d;
+        --inc-green-8: #2f9e44;
+        --inc-green-9: #2b8a3e;
+
+        /** Lime ───────────────────────────────── */
+        --inc-lime-0: #f4fce3;
+        --inc-lime-1: #e9fac8;
+        --inc-lime-2: #d8f5a2;
+        --inc-lime-3: #c0eb75;
+        --inc-lime-4: #a9e34b;
+        --inc-lime-5: #94d82d;
+        --inc-lime-6: #82c91e;
+        --inc-lime-7: #74b816;
+        --inc-lime-8: #66a80f;
+        --inc-lime-9: #5c940d;
+
+        /** Yellow ─────────────────────────────── */
+        --inc-yellow-0: #fff9db;
+        --inc-yellow-1: #fff3bf;
+        --inc-yellow-2: #ffec99;
+        --inc-yellow-3: #ffe066;
+        --inc-yellow-4: #ffd43b;
+        --inc-yellow-5: #fcc419;
+        --inc-yellow-6: #fab005;
+        --inc-yellow-7: #f59f00;
+        --inc-yellow-8: #f08c00;
+        --inc-yellow-9: #e67700;
+
+        /** Orange ─────────────────────────────── */
+        --inc-orange-0: #fff4e6;
+        --inc-orange-1: #ffe8cc;
+        --inc-orange-2: #ffd8a8;
+        --inc-orange-3: #ffc078;
+        --inc-orange-4: #ffa94d;
+        --inc-orange-5: #ff922b;
+        --inc-orange-6: #fd7e14;
+        --inc-orange-7: #f76707;
+        --inc-orange-8: #e8590c;
+        --inc-orange-9: #d9480f;
+
+        /** Black / White ──────────────────────── */
+        --inc-black: #000;
+        --inc-white: #fff;
+
+        /** Miscellaneous ──────────────────────── */
+        --border: 5px solid var(--inc-black);
+        --circuit-background-color: var(--inc-white);
+        --circuit-dot-color: var(--inc-violet-1);
+      }
+
+      /** GENERAL —————————————————————————————————————————————————————— */
+
+      html, body {
+        width: 100vw; height: 100%;
+        scroll-behavior: smooth;
+      }
+
+      html {
+        background-image: radial-gradient(var(--circuit-dot-color) 5%, var(--circuit-background-color) 5%);
+        background-position: center;
+        background-size: 32px 32px;
+        font-family: system-ui, sans-serif;
+      }
+
+      @media (min-width: 1001px) {
+        html {
+          font-size: 16px;
+        }
+      }
+
+      @media (max-width: 1000px) {
+        html {
+          font-size: 12px;
+        }
+      }
+
+      body {
+        display: flex;
+        flex-direction: column;
+      }
+
+      p {
+        font-size: 2rem;
+        line-height: 1.33;
+        max-width: 900px;
+        width: 100%;
+      }
+
+      p + p {
+        margin-top: 1rem;
+      }
+
+      a:not([class]) {
+        transition: color 0.2s;
+      }
+
+      details {
+        position: relative;
+      }
+
+      details a:not(:hover) {
+        color: inherit;
+      }
+
+      details > summary:first-of-type {
+        list-style: none;
+      }
+
+      details[open] {
+        padding-bottom: 1rem;
+      }
+
+      details[open] > * {
+        position: relative;
+      }
+
+      details[open]::before {
+        background-attachment: fixed;
+        background-image: linear-gradient(60deg, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82);
+        background-size: 1000%;
+        content: "";
+        pointer-events: none;
+        position: absolute;
+        width: 100vw;
+        z-index: 0;
+      }
+
+      summary {
+        cursor: pointer;
+        user-select: none;
+      }
+
+      summary::-webkit-details-marker {
+        display: none;
+      }
+
+      /** HEADER ——————————————————————————————————————————————————————— */
+
+      header {
+        border-bottom: var(--border);
+        line-height: 1;
+        padding: 2rem;
+      }
+
+      h1 {
+        font-size: max(10vw, 100%);
+        text-transform: uppercase;
+      }
+
+      .answer {
+        font-style: italic;
+        font-weight: normal;
+        text-transform: uppercase;
+      }
+
+      @media (min-width: 1000px) {
+        .answer {
+          letter-spacing: -0.6rem;
+        }
+      }
+
+      @media (min-width: 801px) and (max-width: 1000px) {
+        .answer {
+          letter-spacing: -0.5rem;
+        }
+      }
+
+      @media (min-width: 501px) and (max-width: 800px) {
+        .answer {
+          letter-spacing: -0.3rem;
+        }
+      }
+
+      @media (max-width: 500px) {
+        .answer {
+          letter-spacing: -0.15rem;
+        }
+      }
+
+      @media (min-width: 401px) and (max-width: 500px) {
+        .answer {
+          font-size: 90%;
+        }
+      }
+
+      @media (max-width: 400px) {
+        .answer {
+          font-size: 80%;
+        }
+      }
+
+      aside {
+        align-items: baseline;
+        background-color: var(--inc-black);
+        border-bottom: var(--border);
+        color: var(--inc-white);
+        display: flex;
+        flex-direction: row;
+        font-size: 2rem;
+        justify-content: space-between;
+        padding: 1rem 2rem;
+        position: relative;
+      }
+
+      /** WHAT ————————————————————————————————————————————————————————— */
+
+      .primer {
+        flex: 1;
+      }
+
+      @media (min-width: 601px) {
+        .primer {
+          padding-right: 4rem;
+        }
+      }
+
+      @media (max-width: 400px) {
+        .primer {
+          padding-top: 5rem;
+        }
+      }
+
+      .primer[open]::before {
+        background-position: bottom;
+        height: calc(100% + 3rem);
+        left: -2rem;
+      }
+
+      @media (min-width: 601px) {
+        .primer[open]::before {
+          top: -2rem;
+        }
+      }
+
+      @media (max-width: 600px) {
+        .primer[open]::before {
+          top: -1rem;
+        }
+      }
+
+      .primer[open] summary {
+        color: var(--inc-grape-1);
+        margin-bottom: 1rem;
+      }
+
+      .primer summary {
+        text-decoration: underline;
+        transition: color 0.2s;
+      }
+
+      .primer summary::marker {
+        display: none;
+      }
+
+      .primer p {
+        color: var(--inc-grape-1);
+      }
+
+      .answer-question {
+        border-radius: 5rem;
+        color: var(--inc-black);
+        display: inline-flex;
+        padding: 1rem 2rem;
+        position: relative;
+        text-decoration: none;
+        text-transform: lowercase;
+        transition: background-color 0.2s;
+      }
+
+      @media (max-width: 600px) {
+        .answer-question {
+          font-size: 1.5rem;
+          position: absolute;
+        }
+      }
+
+      @media (min-width: 401px) and (max-width: 600px) {
+        .answer-question {
+          top: 0.25rem; right: 1.5rem;
+        }
+      }
+
+      @media (max-width: 400px) {
+        .answer-question {
+          top: 1.25rem; left: 1.5rem;
+        }
+      }
+
+      .answer-question:not(:hover) {
+        background-color: var(--inc-white);
+      }
+
+      .answer-question:hover {
+        background-color: var(--inc-black);
+        color: var(--inc-white);
+      }
+
+      /** REASONS —————————————————————————————————————————————————————— */
+
+      .reasons details {
+        border-bottom: var(--border);
+        padding: 2rem;
+      }
+
+      .reasons summary {
+        font-size: max(10vw, 100%);
+        font-weight: 600;
+        text-transform: uppercase;
+        transition: text-shadow 0.2s;
+      }
+
+      .avail[open]::before,
+      .use[open]::before,
+      .scale[open]::before {
+        top: 0; left: 0;
+        height: 100%;
+      }
+
+      /** AVAIL ———————————————————————————————————————————————————————— */
+
+      .avail a:hover {
+        color: var(--inc-yellow-4);
+      }
+
+      .avail p {
+        color: var(--inc-orange-1);
+      }
+
+      .avail[open]::before {
+        background-position: 0;
+      }
+
+      .avail[open] summary {
+        color: var(--inc-yellow-4);
+      }
+
+      @media (min-width: 1201px) {
+        .avail[open] summary {
+          text-shadow: -10px 10px var(--inc-orange-5);
+        }
+      }
+
+      @media (min-width: 901px) and (max-width: 1200px) {
+        .avail[open] summary {
+          text-shadow: -8px 8px var(--inc-orange-5);
+        }
+      }
+
+      @media (min-width: 701px) {
+        .avail {
+          text-align: right;
+        }
+
+        .avail p {
+          margin-left: auto;
+        }
+      }
+
+      @media (min-width: 601px) and (max-width: 900px) {
+        .avail[open] summary {
+          text-shadow: -4px 4px var(--inc-orange-5);
+        }
+      }
+
+      @media (max-width: 600px) {
+        .avail[open] summary {
+          text-shadow: -2px 2px var(--inc-orange-5);
+        }
+      }
+
+      /** USE —————————————————————————————————————————————————————————— */
+
+      .use a:hover {
+        color: var(--inc-cyan-4);
+      }
+
+      .use p {
+        color: var(--inc-cyan-1);
+      }
+
+      .use[open]::before {
+        background-position: 70%;
+      }
+
+      .use[open] summary {
+        color: var(--inc-cyan-4);
+      }
+
+      @media (min-width: 1201px) {
+        .use[open] summary {
+          text-shadow: -10px 10px var(--inc-cyan-9);
+        }
+      }
+
+      @media (min-width: 901px) and (max-width: 1200px) {
+        .use[open] summary {
+          text-shadow: -8px 8px var(--inc-cyan-9);
+        }
+      }
+
+      @media (min-width: 701px) {
+        .use {
+          text-align: center;
+        }
+
+        .use p {
+          margin-left: auto;
+          margin-right: auto;
+          text-align: justify;
+        }
+      }
+
+      @media (min-width: 601px) and (max-width: 900px) {
+        .use[open] summary {
+          text-shadow: -4px 4px var(--inc-cyan-9);
+        }
+      }
+
+      @media (max-width: 600px) {
+        .use[open] summary {
+          text-shadow: -2px 2px var(--inc-cyan-9);
+        }
+      }
+
+      /** SCALE ———————————————————————————————————————————————————————— */
+
+      .scale a:hover {
+        color: var(--inc-grape-4);
+      }
+
+      .scale p {
+        color: var(--inc-grape-1);
+      }
+
+      .scale[open]::before {
+        background-position: 50%;
+      }
+
+      .scale[open] summary {
+        color: var(--inc-grape-4);
+      }
+
+      @media (min-width: 1201px) {
+        .scale[open] summary {
+          text-shadow: -10px 10px var(--inc-grape-9);
+        }
+      }
+
+      @media (min-width: 901px) and (max-width: 1200px) {
+        .scale[open] summary {
+          text-shadow: -8px 8px var(--inc-grape-9);
+        }
+      }
+
+      @media (min-width: 601px) and (max-width: 900px) {
+        .scale[open] summary {
+          text-shadow: -4px 4px var(--inc-grape-9);
+        }
+      }
+
+      @media (max-width: 600px) {
+        .scale[open] summary {
+          text-shadow: -2px 2px var(--inc-grape-9);
+        }
+      }
+
+      /** FOOTER ——————————————————————————————————————————————————————— */
+
+      footer {
+        align-items: end;
+        display: flex;
+        flex: 1;
+        padding-bottom: 2rem;
+        padding-top: 2rem;
+        text-align: center;
+      }
+
+      footer p {
+        margin-left: auto;
+        margin-right: auto;
+        max-width: unset;
+      }
+
+      @media (min-width: 601px) {
+        footer {
+          padding-left: 7rem;
+          padding-right: 7rem;
+        }
+      }
+
+      @media (max-width: 600px) {
+        footer {
+          padding-left: 4rem;
+          padding-right: 4rem;
+        }
+
+        footer p {
+          font-size: 1.25rem;
+        }
+      }
+
+      footer a:not([class]):not(:hover) {
+        color: var(--inc-violet-4);
+      }
+
+      footer a:not([class]):hover {
+        color: var(--inc-violet-6);
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <h1>Is Handshake<br/>Ready? <span class="answer">Not&nbsp;Quite</span></h1>
+    </header>
+
+    <aside>
+      <details class="primer">
+        <summary>What is Handshake?</summary>
+        <p>High&#8209;level, Handshake is a <em>soft&#8209;fork</em> of the&nbsp;DNS.<br/>In layman&rsquo;s terms, Handshake is a blockchain alt&#8209;root of the&nbsp;DNS.</p>
+        <p>Now, why would the DNS &ldquo;need&rdquo; a blockchain? It&rsquo;s effectively just a distributed database (blockchain) and has worked well enough for decades&hellip;what gives?</p>
+        <p>Certificate Authorities keep the DNS secure. On Handshake, we use a combination of existing DNS technologies (DNSSEC and DANE) to secure TLDs from the root level (the blockchain, in this case). The beauty of a PoW chain is that you don&rsquo;t have to trust a TLD is secure, you can look it up yourself. Conversely, Certificate Authorities have a storied history of getting hacked, running arbitrary code, and just being plain&nbsp;insecure.</p>
+        <p>Another benefit of Handshake is its democratization of TLD issuance. Instead of paying ICANN a non&#8209;refundable fee of $200,000 USD, you can compete on the free market in Vickrey&#8209;style auctions to claim TLDs much more affordably. Or, buy the TLD you want on the secondary market.</p>
+        <p>While Handshake seeks to usurp ICANN, existing TLDs are reserved. So, you can visit sites on the DNS <em>and</em> Handshake at the same time. There&rsquo;s no conflict&hellip;currently.<br/>At some point, ICANN <strong>will</strong> roll over and announce a new gTLD round. For reference, the last round was in 2012.</p>
+      </details>
+
+      <a class="answer-question" href="#scale" id="trigger-scale-open">Why Not?</a>
+    </aside>
+
+    <section class="reasons">
+      <details class="avail" id="avail">
+        <summary>Availability</summary>
+        <p>We need more websites, not just splash pages.</p>
+        <p>Why would a browser vendor, VPN, or other service do the work and upkeep of integrating Handshake for a handful of functional websites? Unless they believe in the mission of Handshake, that&rsquo;s not happening. To date, we only have <a href="https://nextdns.io" target="_blank">NextDNS</a> (firewall/VPN) doing just that.</p>
+        <p>A great way to encourage browser vendors, ISPs, and other portals for web access to integrate Handshake is to <strong>build&nbsp;on&nbsp;it</strong>. Don&rsquo;t just <em>talk</em> about it, <em>be</em> about it.</p>
+        <p>Launch that blog you&rsquo;ve been thinking about. Record that podcast you&rsquo;ve been talking about. Build something for your personal friend group.</p>
+        <p>In some respects, Handshake is like Web 1.0; we&rsquo;ve gotta fill it with dope sites and services. If you see something on Web 2 that used to be good and is now terrible&hellip;rebuild it in your image for Handshake.</p>
+      </details>
+
+      <details class="use" id="use">
+        <summary>Usability</summary>
+        <p>Hosting websites and apps is complicated. While tutorials exist, Handshake lacks infrastucture and hosted solutions for the non&#8209;technical folks who want to build and launch something. It should be trivial to launch a Wordpress site; or a wiki; or an eCommerce site.</p>
+        <p>There&rsquo;s opportunity here to build hosting services for &ldquo;normies.&rdquo; Believe it or not, that accounts for most of the Handshake community.</p>
+      </details>
+
+      <details class="scale" id="scale" open>
+        <summary>Scalability</summary>
+        <p>Handshake resolution on systems requires an additional app or service, for <strong>every</strong> device you wish to visit Handshake content on. Broad first&#8209;party support is sorely needed.</p>
+        <p>The community has stepped up though!<br/><a href="https://apps.apple.com/app/id1660666457" target="_blank">HNSNS</a> (iOS), <a href="https://bobwallet.io" target="_blank">Bob Wallet</a> (desktop), <a href="https://nextdns.io" target="_blank">NextDNS</a> (desktop), and <a href="https://impervious.com/fingertip" target="_blank">Fingertip</a> (desktop) are the most popular (and lightweight) resolvers.</p>
+        <p>Getting people to install software to visit &ldquo;special websites&rdquo; seems simple but is actually a tall order. Investigative journalists have no issue with downloading Tor and that&rsquo;s because it serves a purpose.</p>
+        <p>Thus, Handshake&rsquo;s purpose is quite simple: build compelling reasons for people to install a resolver. Build incredible experiences that are Handshake&#8209;exclusive. Essentially:&nbsp;<strong>build&nbsp;dope&nbsp;shit.</strong></p>
+      </details>
+    </section>
+
+    <footer>
+      <p>infosite by <a href="https://neuenet.com/" target="_blank" title="Visit Neuenet">Neuenet</a> for the <a href="https://twitter.com/search?q=%23handshake&src=typeahead_click" target="_blank" title="#Handshake on Twitter">Handshake</a> community 🤝 <a href="https://github.com/neuenet/handshake-ready" target="_blank">view source</a></p>
+    </footer>
+
+    <script>
+      const scale = document.getElementById("scale");
+
+      document.getElementById("trigger-scale-open").onclick = () => {
+        if (!scale.open)
+          scale.open = true;
+      };
+    </script>
+  </body>
+</html>
